@@ -58,4 +58,14 @@ public class InnowiseMainPage extends BasePage{
     public void clickButtonContactUs() {
         buttonContact.click();
     }
+
+    public void clickButtonContactUsWithWait() {
+        buttonContact.click();
+        waitForVisibility(contactForm);
+    }
+
+    public InnowiseMainPage openBaseUrl() {
+        Driver.getDriver().get(ConfigReader.getBaseUrl());
+        return this;
+    }
 }

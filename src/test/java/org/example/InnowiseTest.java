@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.novysh.ConfigReader;
 import org.example.novysh.Driver;
 import org.example.novysh.Utils;
 import org.example.novysh.InnowiseMainPage;
@@ -10,14 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class InnowiseTest {
+    InnowiseMainPage innowiseMainPage;
+
     @BeforeEach
     public void setUp() {
-        Driver.getDriver().get(ConfigReader.getBaseUrl());
+        innowiseMainPage = new InnowiseMainPage();
+        innowiseMainPage.openBaseUrl();
     }
 
     @Test
     public void verifyCompanySloganText() {
-        InnowiseMainPage innowiseMainPage = new InnowiseMainPage();
+
         String actualSloganText = Utils.getText(innowiseMainPage.getSloganText());
         String expectedSloganText = "Building scalable, high-quality software on time and on budget.";
 
