@@ -1,18 +1,17 @@
-package org.example.novysh;
+package org.example.novysh.page;
 
-import org.openqa.selenium.JavascriptExecutor;
+import org.example.novysh.utils.Driver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ContantUsPage extends InnowiseMainPage {
+public class ContactUsPage extends BasePage {
     WebDriver driver;
     WebDriverWait wait;
 
-    @FindBy(id = "contact-email")
+    @FindBy(id = "contact-name")
     private WebElement nameInput;
 
     @FindBy(id = "contact-company")
@@ -26,6 +25,10 @@ public class ContantUsPage extends InnowiseMainPage {
 
     @FindBy(id = "contact-message")
     private WebElement descriptionInput;
+
+    public WebElement getSendButton() {
+        return sendButton;
+    }
 
     @FindBy(id = "contact-send-button")
     private WebElement sendButton;
@@ -48,39 +51,49 @@ public class ContantUsPage extends InnowiseMainPage {
     @FindBy(xpath = "")
     private WebElement loaderSendButton;
 
-    public ContantUsPage(){
+    public ContactUsPage(){
         driver = Driver.getDriver();
         wait = Driver.getWait();
         PageFactory.initElements(driver, this);
     }
 
-    public void fillName(String name) {
+    public ContactUsPage fillName(String name) {
         typeText(nameInput, name);
+        return this;
     }
 
-    public void fillCompany(String company) {
+    public ContactUsPage fillCompany(String company) {
         typeText(companyInput, company);
+        return this;
     }
 
-    public void fillPhone(String phone) {
+    public ContactUsPage fillPhone(String phone) {
         typeText(phoneInput,phone);
+        return this;
     }
 
-    public void fillEmail(String email) {
+    public ContactUsPage fillEmail(String email) {
         typeText(emailInput, email);
+        return this;
     }
 
-    public void fillDescription(String description) {
+    public ContactUsPage fillDescription(String description) {
         typeText(descriptionInput, description);
+        return this;
     }
 
-    public void clickSend() {
-        WebElement currentSendButton = sendButton;
-        acceptCookiesIfPresent();
-       // clickWithScroll(sendButton);
-        clickSendWithoutReload(sendButton);
-        //waitForDisappear(loaderSendButton);
-       // waitForPageToReload(currentSendButton);
+    public ContactUsPage fillForm(String name, String company, String phone, String email, String description) {
+        if (name != null) fillName(name);
+        if (company != null) fillCompany(company);
+        if (phone != null) fillPhone(phone);
+        if (email != null) fillEmail(email);
+        if (description != null) fillDescription(description);
+        return this;
+    }
+
+    public ContactUsPage clickSend() {
+        clickWithScroll(sendButton);
+        return this;
     }
 
     public boolean isNameErrorDisplayed() {

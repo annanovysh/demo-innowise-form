@@ -1,4 +1,4 @@
-package org.example.novysh;
+package org.example.novysh.utils;
 
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.NoSuchElementException;

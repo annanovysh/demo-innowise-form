@@ -1,17 +1,23 @@
-package org.example.novysh;
+package org.example.novysh.page;
 
+import org.example.novysh.utils.ConfigReader;
+import org.example.novysh.utils.Driver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class InnowiseMainPage extends BasePage{
     WebDriver driver;
     WebDriverWait wait;
+    private final String buttonContactLocator = "//a[contains(@class, 'button-contact') and not(contains(@class, 'mob'))]/span";
 
     @FindBy(xpath = "//div[@class='elementor-widget-container']/p")
-    private WebElement sloganText;
+    private WebElement slogan;
 
     // @FindBy(css = ".new-menu .title-section.tit-about_us")
     @FindBy(xpath = "//div[@class='new-menu']//div[@class='new-block-ul']/div[contains(@class,'about')]")
@@ -29,7 +35,7 @@ public class InnowiseMainPage extends BasePage{
     @FindBy(css = ".tit-hire-span-mob")
     private WebElement menuHireIt;
 
-    @FindBy(css = ".button-contact.mob")
+    @FindBy(xpath = "//a[contains(@class, 'button-contact') and not(contains(@class, 'mob'))]/span")
     private WebElement buttonContact;
 
     @FindBy(css = ".new-block-lang.tit")
@@ -51,21 +57,26 @@ public class InnowiseMainPage extends BasePage{
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getSloganText() {
-        return sloganText;
+    public WebElement getSlogan() {
+        return slogan;
     }
 
-    public void clickButtonContactUs() {
+    public ContactUsPage clickButtonContactUs() {
         buttonContact.click();
+        return new ContactUsPage();
     }
 
-    public void clickButtonContactUsWithWait() {
-        buttonContact.click();
-        waitForVisibility(contactForm);
+    public ContactUsPage clickButtonContactUsWithWait() {
+        WebElement button = Driver.getWait().until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath(buttonContactLocator)
+        ));
+
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", button);
+        return new ContactUsPage();
     }
 
-    public InnowiseMainPage openBaseUrl() {
+    public void navigate() {
         Driver.getDriver().get(ConfigReader.getBaseUrl());
-        return this;
+        acceptCookiesIfPresent();
     }
 }

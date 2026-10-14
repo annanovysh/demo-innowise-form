@@ -1,4 +1,4 @@
-package org.example.novysh;
+package org.example.novysh.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
